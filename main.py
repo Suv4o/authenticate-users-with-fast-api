@@ -18,6 +18,7 @@ db = {
         "email": "tim@gmail.com",
         "hashed_password": "$2b$12$HxWHkvMuL7WrZad6lcCfluNFj1/Zp63lvP5aUrKlSTYtoFzPXHOtu",
         "disabled": False,
+        "refresh_token": None,
     }
 }
 
@@ -45,6 +46,7 @@ class UserInDB(User):
     full_name: Optional[str] = None
     disabled: Optional[bool] = None
     hashed_password: str
+    refresh_token: Optional[str] = None
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -153,7 +155,14 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     access_token = create_access_token(
         data={"sub": user.username}, expires_delta=access_token_expires
     )
-    refresh_token = create_refresh_token(data={"sub": user.username})
+
+    if not user.refresh_token or not verify_refresh_token(user.refresh_token):
+        refresh_token = create_refresh_token(data={"sub": user.username})
+        # TODO: Store refresh token in database
+        user.refresh_token = refresh_token
+    else:
+        refresh_token = user.refresh_token
+
     return {
         "access_token": access_token,
         "token_type": "bearer",
