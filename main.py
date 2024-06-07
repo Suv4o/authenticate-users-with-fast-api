@@ -1,5 +1,3 @@
-from typing import Optional
-
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel
@@ -7,11 +5,10 @@ from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 
-SECRET_KEY = "54b7a94f1a202b3d92c3b5101189988f76f87015ad24d11c02d3c4c7143fb328"
+SECRET_KEY = "83daa0256a2289b0fb23693bf1f6034d44396675749244721a2b20e896e11662"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-# Fake Database
 db = {
     "tim": {
         "username": "tim",
@@ -29,14 +26,14 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    username: Optional[str] = None
+    username: str or None = None
 
 
 class User(BaseModel):
     username: str
-    email: Optional[str] = None
-    full_name: Optional[str] = None
-    disabled: Optional[str] = None
+    email: str or None = None
+    full_name: str or None = None
+    disabled: bool or None = None
 
 
 class UserInDB(User):
@@ -73,7 +70,7 @@ def authenticate_user(db, username: str, password: str):
     return user
 
 
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+def create_access_token(data: dict, expires_delta: timedelta or None = None):
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
