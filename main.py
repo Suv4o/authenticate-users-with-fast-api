@@ -6,11 +6,13 @@ from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 
+# TODO: Move this to environment variables
 SECRET_KEY = "83daa0256a2289b0fb23693bf1f6034d44396675749244721a2b20e896e11662"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 REFRESH_TOKEN_EXPIRE_DAYS = 7
 
+# TODO: Move this to real database
 db = {
     "tim": {
         "username": "tim",
@@ -23,6 +25,7 @@ db = {
 }
 
 
+# TODO: Move this to types module
 class Token(BaseModel):
     access_token: str
     token_type: str
@@ -55,6 +58,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 app = FastAPI()
 
 
+# TODO: Move this to separate utils module
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
@@ -142,6 +146,7 @@ async def get_current_active_user(current_user: UserInDB = Depends(get_current_u
     return current_user
 
 
+# TODO: Move this to separate router
 @app.post("/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     user = authenticate_user(db, form_data.username, form_data.password)
@@ -170,6 +175,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     }
 
 
+# TODO: Move this to separate router
 @app.post("/token/refresh", response_model=Token)
 async def refresh_access_token(refresh_token: str):
     if not verify_refresh_token(refresh_token):
@@ -198,11 +204,13 @@ async def refresh_access_token(refresh_token: str):
     }
 
 
+# TODO: Move this to separate router
 @app.get("/users/me/", response_model=User)
 async def read_users_me(current_user: User = Depends(get_current_active_user)):
     return current_user
 
 
+# TODO: Move this to separate router
 @app.get("/users/me/items")
 async def read_own_items(current_user: User = Depends(get_current_active_user)):
     return [{"item_id": 1, "owner": current_user}]
