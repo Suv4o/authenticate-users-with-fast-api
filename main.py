@@ -1,3 +1,4 @@
+from typing import Optional, Union
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel
@@ -28,17 +29,21 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    username: str or None = None
+    username: Optional[str] = None
 
 
 class User(BaseModel):
     username: str
-    email: str or None = None
-    full_name: str or None = None
-    disabled: bool or None = None
+    email: Optional[str] = None
+    full_name: Optional[str] = None
+    disabled: Optional[str] = None
 
 
 class UserInDB(User):
+    username: str
+    email: Optional[str] = None
+    full_name: Optional[str] = None
+    disabled: Optional[bool] = None
     hashed_password: str
 
 
@@ -91,7 +96,9 @@ def verify_refresh_token(token: str):
         return False
 
 
-def create_access_token(data: dict, expires_delta: timedelta or None = None):
+def create_access_token(
+    data: dict, expires_delta: Optional[Union[timedelta, None]] = None
+):
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
