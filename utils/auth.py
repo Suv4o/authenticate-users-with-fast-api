@@ -1,3 +1,4 @@
+import logging
 from typing import Optional, Union
 from fastapi.security import OAuth2PasswordBearer
 from datetime import datetime, timedelta
@@ -14,6 +15,7 @@ REFRESH_TOKEN_EXPIRE_DAYS = env["REFRESH_TOKEN_EXPIRE_DAYS"]
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+logging.getLogger("passlib").setLevel(logging.ERROR)
 
 # Temporary database
 db = {
