@@ -5,12 +5,12 @@ from pydantic import BaseModel
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from passlib.context import CryptContext
+from config.env import env
 
-# TODO: Move this to environment variables
-SECRET_KEY = "83daa0256a2289b0fb23693bf1f6034d44396675749244721a2b20e896e11662"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
-REFRESH_TOKEN_EXPIRE_DAYS = 7
+SECRET_KEY = env["SECRET_KEY"]
+ALGORITHM = env["ALGORITHM"]
+ACCESS_TOKEN_EXPIRE_MINUTES = env["ACCESS_TOKEN_EXPIRE_MINUTES"]
+REFRESH_TOKEN_EXPIRE_DAYS = env["REFRESH_TOKEN_EXPIRE_DAYS"]
 
 # TODO: Move this to real database
 db = {
