@@ -1,0 +1,1 @@
+cd scripts && poetry run python create_db_schema.py

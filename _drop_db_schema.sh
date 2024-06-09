@@ -1,0 +1,1 @@
+cd scripts && poetry run python drop_db_schema.py
