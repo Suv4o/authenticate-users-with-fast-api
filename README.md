@@ -1,3 +1,10 @@
+TODO:
+
+-   DTO email validation
+-   DTO password strong password validation
+-   Create Database Fixtures
+-   Clean and write the README.md
+
 ```bash
 sh _run_dev.sh
 ```

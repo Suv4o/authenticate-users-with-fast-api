@@ -41,3 +41,15 @@ async def create_user(
         "full_name": db_user.full_name,
         "disabled": db_user.disabled,
     }
+
+
+@router.get("")
+async def get_users(
+    current_user: UserInDB = Depends(get_current_active_user),
+):
+    return {
+        "email": current_user.email,
+        "full_name": current_user.full_name,
+        "disabled": current_user.disabled,
+        "refresh_token": current_user.refresh_token,
+    }
