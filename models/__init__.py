@@ -1,4 +1,4 @@
 from .base import *
-from .users import Users
+from .users import *
 
 __all__ = ["Model", "Users"]

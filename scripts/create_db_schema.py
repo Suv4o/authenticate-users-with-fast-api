@@ -9,8 +9,7 @@ from config.env import get_env
 
 env = get_env("../.env")
 
-console = Logger("app").get()
-
+console = Logger("DATABASE").get()
 
 conn = psycopg2.connect(
     host=env["POSTGRES_HOST"],

@@ -1,6 +1,5 @@
 TODO:
 
--   Create Database Fixtures
 -   Clean and write the README.md
 
 ```bash
