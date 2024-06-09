@@ -8,10 +8,12 @@ class CreateUser(BaseModel):
     password: str = None
 
 
-class UserInDB(CreateUser):
+class UserInDB(BaseModel):
     id: int
     email: str = None
     full_name: str = None
     disabled: Optional[bool] = None
     password: str
     refresh_token: Optional[str] = None
+    created_at: str
+    updated_at: str

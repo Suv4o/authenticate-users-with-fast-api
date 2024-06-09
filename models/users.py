@@ -10,7 +10,7 @@ class Users(TimeStampedModel):
     email = Column(String(320), nullable=False, unique=True)
     password = Column(String(100), nullable=False)
     disabled = Column(Boolean, default=False)
-    refresh_token = Column(String(100), nullable=True)
+    refresh_token = Column(String(150), nullable=True)
 
     def __init__(self, full_name, email, password, disabled=False, refresh_token=None):
         self.full_name = full_name
