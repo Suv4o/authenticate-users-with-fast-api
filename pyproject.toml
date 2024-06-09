@@ -16,6 +16,7 @@ python-dotenv = "^1.0.1"
 psycopg2 = "^2.9.9"
 sqlalchemy = "^2.0.30"
 alembic = "^1.13.1"
+poetry-plugin-export = "^1.8.0"
 
 
 [build-system]
